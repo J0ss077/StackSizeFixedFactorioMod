@@ -1,34 +1,41 @@
 data:extend({
-	{
-		type = "bool-setting",
-		name = "F077SSF-use-multiplier",
-		setting_type = "startup",
-		default_value = true,
-		order = "a-a",
-	},
-	{
-		type = 'int-setting',
-		name = 'F077SSF-val-multiplier',
-		setting_type = 'startup',
-		maximum_value = 999999,
-		default_value = 10,
-		minimum_value = 1,
-		order = 'a-b'
-	},
-	{
-		type = "bool-setting",
-		name = "F077SSF-use-static",
-		setting_type = "startup",
-		default_value = false,
-		order = "b-a",
-	},
-	{
-		type = 'int-setting',
-		name = 'F077SSF-val-static',
-		setting_type = 'startup',
-		maximum_value = 999999,
-		default_value = 500,
-		minimum_value = 1,
-		order = 'b-b'
-	},
+    {
+        type = "bool-setting",
+        name = "F077SSF-use-multiplier",
+        setting_type = "startup",
+        default_value = true,
+        order = "a-a",
+    },
+    {
+        type = "int-setting",
+        name = "F077SSF-val-multiplier",
+        setting_type = "startup",
+        maximum_value = 999999,
+        default_value = 10,
+        minimum_value = 1,
+        order = "a-b",
+    },
+    {
+        type = "bool-setting",
+        name = "F077SSF-use-static",
+        setting_type = "startup",
+        default_value = false,
+        order = "b-a",
+    },
+    {
+        type = "int-setting",
+        name = "F077SSF-val-static",
+        setting_type = "startup",
+        maximum_value = 999999,
+        default_value = 500,
+        minimum_value = 1,
+        order = "b-b",
+    },
+    {
+        type = "bool-setting",
+        name = "F077SSF-force-stacking",
+        setting_type = "startup",
+        default_value = false,
+        order = "c-a",
+    },
 })
