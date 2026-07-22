@@ -1,22 +1,36 @@
---// settings
+--//------------------//
+--//     settings     //
+--//------------------//
 
-local use_static = settings.startup['F077SSF-use-static'].value --- @as boolean
+local use_static = settings.startup["F077SSF-use-static"].value --- @as boolean
 
-local val_static = settings.startup['F077SSF-val-static'].value --- @as integer
+local val_static = settings.startup["F077SSF-val-static"].value --- @as integer
 
-local use_multiplier = settings.startup['F077SSF-use-multiplier'].value --- @as boolean
+local use_multiplier = settings.startup["F077SSF-use-multiplier"].value --- @as boolean
 
-local val_multiplier = settings.startup['F077SSF-val-multiplier'].value --- @as integer
+local val_multiplier = settings.startup["F077SSF-val-multiplier"].value --- @as integer
 
-local force_stacking = settings.startup['F077SSF-force-stacking'].value --- @as boolean
+local use_custom_formula = settings.startup["F077SSF-use-custom-formula"].value
 
---// utils
+local val_custom_formula = settings.startup["F077SSF-val-custom-formula"].value
+
+local force_stacking = settings.startup["F077SSF-force-stacking"].value --- @as boolean
+
+--//----------------------------//
+--//     const|vars|objects     //
+--//----------------------------//
+
+local math_parser = use_custom_formula and require("scripts.libs.math-parser.module"):new() or nil
+
+--//---------------//
+--//     utils     //
+--//---------------//
 
 --- @param array table
 ---
 --- @param value any
 ---
---- @return int?
+--- @return integer?
 ---
 local function array_find(array, value)
     ---
@@ -24,7 +38,9 @@ local function array_find(array, value)
     ---
 end
 
---// core-logic
+--//--------------------//
+--//     core-logic     //
+--//--------------------//
 
 for __, item in pairs(data.raw.item) do
     --
@@ -36,9 +52,9 @@ for __, item in pairs(data.raw.item) do
 
             if index then
                 --
-                if force_stacking then table.remove(item.flags, index)
+                if not force_stacking then goto continue end
                 --
-                else goto pass end
+                table.remove(item.flags, index)
             end
         end
 
@@ -46,6 +62,15 @@ for __, item in pairs(data.raw.item) do
 
         if use_multiplier then item.stack_size = item.stack_size * val_multiplier end
 
-        ::pass::
+        ------------------------------------------------------------------
+        ------------------------------------------------------------------
+
+        if  math_parser then math_parser:addVariable("x", item.stack_size)
+            --
+            item.stack_size = math.max(1, math.floor(math_parser:solve(val_custom_formula)))
+            --
+        end
+
+        ::continue::
     end
 end
